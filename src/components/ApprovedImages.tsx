@@ -2,25 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { Image } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
+import ImageState from "../state/ImageState";
 
-const mockImages = [
-  "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-  "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-];
-
-export const ApprovedImages = () => (
-  <Wrapper>
-    <Text>APPROVED IMAGES (0)</Text>
-    <ImagesWrapper>
-      {mockImages.map((image, i) => (
-        <ImageWrapper key={i}>
-          <Image width={70} src={image} />
-          <CheckOutlined />
-        </ImageWrapper>
-      ))}
-    </ImagesWrapper>
-  </Wrapper>
-);
+export const ApprovedImages = () => {
+  const { approvedImageUrls } = ImageState.useContainer();
+  return (
+    <Wrapper>
+      <Text>{`APPROVED IMAGES (${approvedImageUrls.length})`}</Text>
+      <ImagesWrapper>
+        {approvedImageUrls.map((image, i) => (
+          <ImageWrapper key={i}>
+            <Image width={100} height={60} src={image} />
+            <CheckOutlined />
+          </ImageWrapper>
+        ))}
+      </ImagesWrapper>
+    </Wrapper>
+  );
+};
 
 const Text = styled.div`
   font-weight: 700;
@@ -30,14 +29,14 @@ const Text = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 460px;
   padding: 12px;
+  border-bottom: 2px solid var(--divider-color);
 `;
 
 const ImagesWrapper = styled.div`
   display: flex;
-  border-bottom: 2px solid var(--divider-color);
-  padding: 16px 0;
+  overflow: scroll;
 `;
 
 const ImageWrapper = styled.div`
@@ -45,6 +44,9 @@ const ImageWrapper = styled.div`
   position: relative;
   svg {
     position: absolute;
-    top: 0;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-weight: 24px;
   }
 `;
